@@ -55,6 +55,14 @@ public final class MineConfigLoader {
                 mineSection.getInt("maxY"),
                 mineSection.getInt("maxZ")
             );
+            mine.teleport = new MinePosition(
+                mineSection.getInt("tpX"),
+                mineSection.getInt("tpY"),
+                mineSection.getInt("tpZ")
+            );
+            if (mine.teleport.isZero()) {
+                mine.teleport = null;
+            }
 
             newMines.add(mine);
         }
@@ -78,7 +86,13 @@ public final class MineConfigLoader {
             data.put("maxX", mine.maxPos.x);
             data.put("maxY", mine.maxPos.y);
             data.put("maxZ", mine.maxPos.z);
-    
+
+            if (mine.teleport != null) {
+                data.put("tpX", mine.teleport.x);
+                data.put("tpY", mine.teleport.y);
+                data.put("tpZ", mine.teleport.z);   
+            }
+
             data.put("resetTime", mine.resetTime);
             data.put("world", mine.world.getName());
         

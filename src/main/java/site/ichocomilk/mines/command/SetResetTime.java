@@ -1,5 +1,6 @@
 package site.ichocomilk.mines.command;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 
 import site.ichocomilk.mines.data.Mine;
@@ -17,7 +18,7 @@ final class Reset {
             return;
         }
         sender.sendMessage("Mine " + args[0] + " reset!");
-        manager.resetMine(mine);
+        manager.resetMine(mine, Bukkit.getOnlinePlayers());
     }
 
     static void setResetTime(final CommandSender sender, final String[] args, final Mine mine) {
