@@ -1,0 +1,9 @@
+name: MilkMines
+main: site.ichocomilk.mines.MinesPlugin
+version: 1.0
+author: iChocoMilk
+api-version: 1.21
+
+commands:
+  mines:
+    description: "Mines command"
