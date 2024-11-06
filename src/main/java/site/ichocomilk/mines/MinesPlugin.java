@@ -1,7 +1,5 @@
 package site.ichocomilk.mines;
 
-import java.util.List;
-
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.command.TabExecutor;
@@ -9,7 +7,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import site.ichocomilk.mines.command.MineCommand;
 import site.ichocomilk.mines.config.ConfigManager;
-import site.ichocomilk.mines.data.Mine;
+import site.ichocomilk.mines.data.MinesData;
+import site.ichocomilk.mines.hook.PlaceholderApiHook;
 import site.ichocomilk.mines.manager.MineManager;
 import site.ichocomilk.mines.nms.NMSVersion;
 import site.ichocomilk.mines.nms.none.NMSWrapperNone;
@@ -24,12 +23,16 @@ public final class MinesPlugin extends JavaPlugin {
     public void onEnable() {
         configManager.load();
 
-        final List<Mine> mines = configManager.getMineFiles().getMines();
+        final MinesData mines = configManager.getMineFiles().getMines();
         final MineManager mineManager = new MineManager(mines, getNmsVersion());
+
+        if (getServer().getPluginManager().isPluginEnabled("PlaceholderAPI")) {
+            new PlaceholderApiHook(mines.byName).register();
+        }
 
         registerCommand("mines", new MineCommand(this, mineManager));
 
-        getServer().getScheduler().runTaskTimer(this, new MineResetTimer(mines, mineManager), 20, 20);
+        getServer().getScheduler().runTaskTimer(this, new MineResetTimer(mines.listMines, mineManager), 20, 20);
     }
 
     @Override

@@ -1,8 +1,6 @@
 package site.ichocomilk.mines.config.mine;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.logging.Logger;
@@ -17,18 +15,17 @@ import site.ichocomilk.mines.config.ConfigSection;
 import site.ichocomilk.mines.config.utils.FileUtils;
 import site.ichocomilk.mines.data.Mine;
 import site.ichocomilk.mines.data.MinePosition;
+import site.ichocomilk.mines.data.MinesData;
 
 public final class MineConfigLoader {
 
-    private List<Mine> mines;
+    private final MinesData mines = new MinesData();
 
     public void load(final ConfigSection config, final Logger logger) {
         if (config == null || config.values() == null) {
-            this.mines = new ArrayList<>();
             return;
         }
         final Set<Entry<String, Object>> entries = config.values().entrySet();
-        final List<Mine> newMines = new ArrayList<>(entries.size());
 
         for (final Entry<String, Object> entry : entries) {
             if (!(entry.getValue() instanceof Map)) {
@@ -64,15 +61,14 @@ public final class MineConfigLoader {
                 mine.teleport = null;
             }
 
-            newMines.add(mine);
+            mines.addMine(mine);
         }
-        this.mines = newMines;
     }
 
     public void save(final FileUtils fileUtils) {
         final Map<String, Map<String, Object>> minesData = new HashMap<>();
 
-        for (final Mine mine : mines) {
+        for (final Mine mine : mines.listMines) {
             final Map<String, Object> data = new HashMap<>(8);
             if (mine.block == null || mine.minPos == null || mine.maxPos == null) {
                 continue;
@@ -102,7 +98,7 @@ public final class MineConfigLoader {
         fileUtils.writeFile(minesData, "mines.yml");
     }
 
-    public List<Mine> getMines() {
+    public MinesData getMines() {
         return mines;
     }
 }

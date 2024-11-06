@@ -10,6 +10,12 @@ import site.ichocomilk.mines.data.MinePosition;
 public final class Pos {
 
     static void handlePos(final CommandSender sender, final String[] args, final Mine mine) {
+        if (args.length == 3 && args[2].equalsIgnoreCase("reset")) {
+            mine.minPos = null;
+            mine.maxPos = null;
+            sender.sendMessage("Min and max positions reseted!!");
+            return;
+        }
         calculateMinMaxPos(mine, sender);
         sender.sendMessage(
             "\n Pos Min: " + mine.minPos.toString() +

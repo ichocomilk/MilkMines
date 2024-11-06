@@ -13,7 +13,7 @@ final class Delete {
             sender.sendMessage("The mine " + args[0] + " don't exist");
             return;
         }
-        manager.getMines().remove(mine);
+        manager.getMines().removeMine(mine);
         sender.sendMessage("Mine " + args[0] + " removed!");
     }
 }

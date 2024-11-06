@@ -8,14 +8,15 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import site.ichocomilk.mines.data.Mine;
+import site.ichocomilk.mines.data.MinesData;
 import site.ichocomilk.mines.nms.NMSVersion;
 
 public final class MineManager {
 
     private final NMSVersion nmsVersion;
-    private final List<Mine> mines;
+    private final MinesData mines;
 
-    public MineManager(List<Mine> mines, NMSVersion nmsVersion) {
+    public MineManager(MinesData mines, NMSVersion nmsVersion) {
         this.nmsVersion = nmsVersion;
         this.mines = mines;
     }
@@ -47,21 +48,21 @@ public final class MineManager {
     }
 
     public List<String> getMinesNames() {
-        final List<String> names = new ArrayList<>(mines.size());
-        for (final Mine mine : mines) {
+        final List<String> names = new ArrayList<>(mines.listMines.size());
+        for (final Mine mine : mines.listMines) {
             names.add(mine.name);
         }
         return names;
     }
+
     public Mine getByName(final String name) {
-        for (final Mine mine : mines) {
-            if (mine.name.equalsIgnoreCase(name)) {
-                return mine;
-            }
-        }
-        return null;
+        return mines.byName.get(name);
     }
-    public List<Mine> getMines() {
+
+    public List<Mine> getMinesList() {
+        return mines.listMines;
+    }
+    public MinesData getMines() {
         return mines;
     }
 }

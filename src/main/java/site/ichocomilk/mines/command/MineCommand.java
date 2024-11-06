@@ -105,7 +105,7 @@ public final class MineCommand implements TabExecutor {
             "\n     §7info §8- See mine info" +
             "\n     §7tp §8 - Teleport to mine" +
             "\n     §7settp §8 - Set Teleport" +
-            "\n     §7pos §8- Set mine position" +
+            "\n     §7pos (reset) §8- Set mine position" +
             "\n ";
     }
 }

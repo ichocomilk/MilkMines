@@ -18,7 +18,7 @@ final class Create {
             sender.sendMessage("The mine " + args[0] + " already exist");
             return;
         }
-        manager.getMines().add(new Mine(60, args[0], ((Player)sender).getWorld()));
+        manager.getMines().addMine(new Mine(60, args[0], ((Player)sender).getWorld()));
         sender.sendMessage("Mine " + args[0] + "created!");
     }
 }
